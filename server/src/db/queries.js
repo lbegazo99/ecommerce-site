@@ -1,6 +1,6 @@
 const pool = require("./pool");
 
-async function getTeamNBAJerseys(req,res,team_name) {
+async function getTeamNBAJerseys(team_name) {
     const result = await pool.query(`
     SELECT *
     FROM product
@@ -11,13 +11,24 @@ async function getTeamNBAJerseys(req,res,team_name) {
     return result.rows;
 }
 
-async function getNbaPlayerJersey(req,req,player_name){
+async function getNbaPlayerJersey(player_name){
     const result = await pool.query(`
     SELECT * 
     FROM product
-    Join jersey on p_id = product
+    Join jersey on p_id = product_id
     WHERE jersey.player = $1
     `,[player_name]);
+
+    return result.rows;
+}
+
+async function getAllNBAProducts(){
+    const result = await pool.query(`
+        SELECT *
+        FROM product
+        Join jersey on p_id = product_id
+        WHERE league = 'NBA'
+    `)
 
     return result.rows;
 }
@@ -26,6 +37,7 @@ async function getNbaPlayerJersey(req,req,player_name){
 
 
 module.exports ={
+    getTeamNBAJerseys,
     getNbaPlayerJersey,
-    getNbaPlayerJersey
+    getAllNBAProducts
 }

@@ -1,3 +1,4 @@
+const { json } = require("express/lib/response");
 const db = require("../db/queries");
 
 async function getTeamNBAJersey(req,res){
@@ -20,6 +21,16 @@ async function getNbaPlayerJersey(req,res){
     }
 }
 
+async function getAllProducts(req,res){
+    try{
+        const products = await db.getAllNBAProducts();
+        res.json(products);
+    }catch(err){
+        console.error("error fetching products",err)
+        res.status(500).json({error:"Internal server error"});
+    }
+}
 
 
-module.exports = {getTeamNBAJersey,getNbaPlayerJersey}
+
+module.exports = {getTeamNBAJersey,getNbaPlayerJersey,getAllProducts}

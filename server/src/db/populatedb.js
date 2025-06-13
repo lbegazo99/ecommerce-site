@@ -24,6 +24,40 @@ CREATE TABLE IF NOT EXISTS Address (
 );
 `;
 
+const creatAndInitializeProductTable = `
+  CREATE TABLE IF NOT EXISTS Product (
+    product_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    price DECIMAL(6,2),
+    product_description TEXT,
+    thumbnail TEXT,
+    quantity INTEGER
+  );
+
+  INSERT INTO Product (price, product_description, thumbnail, quantity)
+  VALUES 
+    (299.99, 'Wilt Chamberlain 1972 Los Angeles Lakers Jersey', '/images/WiltChamberlainJersey.avif', 5),
+    (299.99, 'Kevin Garnett 2003 Minnesota Timberwolves Jersey', '/images/GarnettTimberWolves.avif', 5),
+    (135.99, 'Carmelo Anthony 2003 Denver Nuggets Jersey', '/images/MeloPowderBlue.avif', 5)
+  ON CONFLICT DO NOTHING;
+
+  CREATE TABLE IF NOT EXISTS Jersey (
+    p_id INTEGER PRIMARY KEY,
+    league VARCHAR(10),
+    team VARCHAR(20),
+    player VARCHAR(30),
+    year VARCHAR(4),
+    FOREIGN KEY (p_id) REFERENCES Product(product_id)
+  );
+
+  INSERT INTO Jersey (p_id, league, team, player, year)
+  VALUES
+    (1, 'NBA', 'Lakers', 'Wilt Chamberlain', '1972'),
+    (2, 'NBA', 'TimberWolves', 'Kevin Garnett', '2003'),
+    (3, 'NBA', 'Nuggets', 'Carmelo Anthony', '2003')
+  ON CONFLICT DO NOTHING;
+`;
+
+
 const createAndSeedTables = `
   CREATE TABLE IF NOT EXISTS Customer (
     customer_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -58,14 +92,16 @@ const createAndSeedTables = `
     price DECIMAL(6,2),
     product_type VARCHAR(30),
     product_description TEXT,
-    thumbnail TEXT
+    thumbnail TEXT,
+    quantity INTEGER,
   );
 
-  INSERT INTO Product (price, product_description, thumbnail)
+  INSERT INTO Product (price, product_description, thumbnail,quantity)
    VALUES 
-    (299.99, 'Wilt Chamberlain 1972 Los Angeles Lakers Jersey', '/images/WiltChamberlainJersey.avif'),
-    (299.99, 'Kevin Garnett 2003 Minnesota Timberwolves Jersey', '/images/GarnettTimberWolves.avif'),
-    (135.99, 'Carmelo Anthony 2003 Denver Nuggets Jersey', '/images/MeloPowderBlue.avif')
+    (299.99, 'Wilt Chamberlain 1972 Los Angeles Lakers Jersey', '/images/WiltChamberlainJersey.avif',5),
+    (299.99, 'Kevin Garnett 2003 Minnesota Timberwolves Jersey', '/images/GarnettTimberWolves.avif',5),
+    (135.99, 'Carmelo Anthony 2003 Denver Nuggets Jersey', '/images/MeloPowderBlue.avif',5)
+    
   ON CONFLICT DO NOTHING;
 
   CREATE TABLE IF NOT EXISTS Jersey(
@@ -96,7 +132,7 @@ const createAndSeedTables = `
 
 async function initDb() {
   try {
-    await pool.query(createCustomerTable);
+    await pool.query(creatAndInitializeProductTable);
     console.log("Database initialized.");
   } catch (err) {
     console.error("Database setup error:", err);
