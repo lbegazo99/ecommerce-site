@@ -1,0 +1,11 @@
+# dotenv credentials
+.env
+
+# node modules
+node_modules/
+
+# logs
+*.log
+
+# OS-specific
+.DS_Store
