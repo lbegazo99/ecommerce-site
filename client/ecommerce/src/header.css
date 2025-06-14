@@ -1,0 +1,25 @@
+#top{
+    display: flex;
+    justify-content: space-between;
+}
+
+#signUpPromotion{
+    width: 200px;
+    color: white;
+    background-color: black;
+}
+#cart{
+    width: 10px;
+    height: 10px;
+}
+#bottom{
+    display: flex;
+    height: 100px;
+    align-items: center;
+    gap: 500px;
+}
+
+
+.searchBarContainer{
+
+}

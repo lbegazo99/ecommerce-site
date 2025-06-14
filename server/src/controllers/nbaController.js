@@ -31,6 +31,16 @@ async function getAllProducts(req,res){
     }
 }
 
+async function getAllProductsDescriptions(req,res){
+    try{
+        const names = await db.getAllProductsNames(req.params.value);
+        res.json(names);
+    }catch(err){
+        console.error("error fetching products",err)
+        res.status(500).json({error:"Internal server error"});
+    }
+}
 
 
-module.exports = {getTeamNBAJersey,getNbaPlayerJersey,getAllProducts}
+
+module.exports = {getTeamNBAJersey,getNbaPlayerJersey,getAllProducts,getAllProductsDescriptions}
