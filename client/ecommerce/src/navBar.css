@@ -1,0 +1,13 @@
+.navBar{
+ background-color: black;
+ font-size: 30px;
+ display: flex;
+ align-items: center;
+ justify-content: space-evenly;
+}
+
+button{
+    border: none;
+    background-color: black;
+    color: white;
+}

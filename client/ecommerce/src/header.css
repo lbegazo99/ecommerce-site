@@ -1,12 +1,15 @@
 #top{
     display: flex;
     justify-content: space-between;
+    background-color: #efefef;
+    height: 40px;
 }
 
 #signUpPromotion{
-    width: 200px;
+    width: 150px px;
     color: white;
     background-color: black;
+    height: 25px;
 }
 #cart{
     width: 10px;
