@@ -1,13 +1,26 @@
 .navBar{
- background-color: black;
- font-size: 30px;
- display: flex;
- align-items: center;
- justify-content: space-evenly;
+    background-color: black;
+    display: flex;
+    align-items: baseline;
+    padding: .5rem;
+    gap: 1rem;
 }
 
-button{
+.link{
+    background: none;
     border: none;
-    background-color: black;
+    text-decoration: none;
     color: white;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+.link:hover{
+    background-color: #777 ;
+}
+
+.dropdown{
+    position: relative;
 }

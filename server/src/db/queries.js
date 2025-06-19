@@ -43,12 +43,22 @@ async function getAllProductsNames(value){
     return result.rows
 }
 
+async function getAllNBATeams(){
+    const result = await pool.query(`
+        SELECT DISTINCT team
+        FROM Jersey
+        WHERE league = 'NBA'
+         `
+    )
 
+    return result.rows;
+}
 
 
 module.exports ={
     getTeamNBAJerseys,
     getNbaPlayerJersey,
     getAllNBAProducts,
-    getAllProductsNames
+    getAllProductsNames,
+    getAllNBATeams
 }

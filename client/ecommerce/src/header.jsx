@@ -11,9 +11,9 @@ function Header(){
             <div id="header">
                 <div id="top">
                     <button id = "signUpPromotion">SIGN UP AND SAVE 10%</button>
-                    <div>
-                        <button><Link to = "/login">Log In</Link></button>
-                        <button className="cart"><FaShoppingCart /></button>
+                    <div className="left-side">
+                        <button id = "loginButton" style={{backgroundColor:"inherit"}} ><Link to = "/login">Log In</Link></button>
+                        <button id="cart"><FaShoppingCart /></button>
                     </div>
                 </div>
                 <div id="bottom">

@@ -1,3 +1,4 @@
+
 #top{
     display: flex;
     justify-content: space-between;
@@ -11,18 +12,40 @@
     background-color: black;
     height: 25px;
 }
-#cart{
-    width: 10px;
-    height: 10px;
+
+
+#loginButton:visited{
+    color: black;
 }
+
+#cart{
+    width: 50px;
+    height: 40px;
+}
+
+#cart > *{
+    height: 20px;
+    width: 20px;
+}
+
+.left-side{
+    width: 100px;
+    display: flex;
+    justify-content: space-evenly
+ }
+
 #bottom{
     display: flex;
     height: 100px;
     align-items: center;
-    gap: 500px;
+    gap: 300px;
 }
 
 
-.searchBarContainer{
-
+#logo{
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: ananda-black-font-f85089;
 }
