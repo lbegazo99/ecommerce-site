@@ -1,7 +1,9 @@
 const { redirect } = require('express/lib/response');
 const db = require ('../db/insert')
+const db2 = require('../db/queries')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 async function CreateNewUser(req,res){
     try{
         const hashedPassword = await bcrypt.hash(req.body.password,10);
@@ -30,4 +32,17 @@ async function CreateNewUser(req,res){
     }
 }
 
-module.exports = {CreateNewUser}
+async function addToCart(req,res){
+    const customer_id = req.user.customer_id;
+    const{product_id,quantity} = req.body;
+    console.log(product_id)
+    console.log(quantity)
+    try {
+        await db2.addToCart(customer_id,product_id,quantity)
+    } catch (err) {
+        console.error("Error in addToCart:",err)
+        res.status(500).json({error:"Failed to add item to cart"});
+    }
+}
+
+module.exports = {CreateNewUser,addToCart}

@@ -1,10 +1,12 @@
 const {Router} = require("express");
-const { CreateNewUser } = require("../controllers/userController");
+const { CreateNewUser, addToCart } = require("../controllers/userController");
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const userRouter = Router();
 const pool = require('../db/pool');
 const bcrypt = require('bcryptjs');
+const res = require("express/lib/response");
+const req = require("express/lib/request");
 
 userRouter.post("/sign-up",CreateNewUser);
 
@@ -32,6 +34,8 @@ userRouter.post("/log-in", async (req,res) =>{
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
+
+    console.log(user.customer_id)
 
     res.json({ message: 'Login successful', token });
 
@@ -64,5 +68,7 @@ function verifyToken(req,res,next){
     res.sendStatus(403);
   }
 }
+
+userRouter.post("/addToCart", verifyToken, addToCart)
 
 module.exports = userRouter;

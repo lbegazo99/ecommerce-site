@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./navBar.css";
 import DropDown from "./DropDown";
 import { useState } from "react";

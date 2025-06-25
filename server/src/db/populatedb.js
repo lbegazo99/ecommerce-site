@@ -2,6 +2,18 @@ require("dotenv").config();
 const pool = require('./pool'); 
 console.log("🚀 Populating database:", process.env.DB_NAME);
 
+const createShoppingCartTable = `
+  CREATE TABLE IF NOT EXISTS cart(
+    customer_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER DEFAULT 1,
+
+    PRIMARY KEY (customer_id,product_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
+  )
+`;
+
 const createCustomerTable = `
 CREATE TABLE IF NOT EXISTS Customer (
   customer_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -132,7 +144,7 @@ const createAndSeedTables = `
 
 async function initDb() {
   try {
-    await pool.query(creatAndInitializeProductTable);
+    await pool.query(createShoppingCartTable);
     console.log("Database initialized.");
   } catch (err) {
     console.error("Database setup error:", err);

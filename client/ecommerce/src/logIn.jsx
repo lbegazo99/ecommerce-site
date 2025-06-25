@@ -1,5 +1,6 @@
-import React,{useState} from "react"
+import React,{useState,useContext} from "react"
 import {Link} from "react-router-dom";
+import { AuthContext } from "./AuthProvider";
 
 function LogIn(){
     
@@ -7,6 +8,8 @@ function LogIn(){
         username:"",
         password:"",
     })
+
+    const{login} = useContext(AuthContext)
 
     const[message,setMessage] = useState("");
 
@@ -32,8 +35,9 @@ function LogIn(){
             const data = await res.json();
 
             if(res.ok){
-                setMessage("User created successfully");
+                localStorage.setItem("token",data.token);
                 setFormData({username:"",password:""})
+                login()
             }else{
                 setMessage(data.error || "Something went wrong");
             }

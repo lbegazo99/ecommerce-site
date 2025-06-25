@@ -35,7 +35,7 @@ async function getAllNBAProducts(){
 
 async function getAllProductsNames(value){
     const result = await pool.query(`
-        SELECT product_description
+        SELECT *
         FROM product
         WHERE product_description ILIKE $1
     `,[`%${value}%`])
@@ -54,11 +54,31 @@ async function getAllNBATeams(){
     return result.rows;
 }
 
+async function getProduct(productId){
+    const result = await pool.query(`
+        SELECT *
+        FROM Product
+        WHERE product_id = $1
+    `,[productId])
+    
+    return result.rows;
+}
 
-module.exports ={
+async function addToCart(customer_id,product_id,quantity){
+    await pool.query(`
+        INSERT INTO cart(customer_id,product_id,quantity)
+        VALUES($1,$2,$3)
+        ON CONFLICT (customer_id,product_id)
+        DO UPDATE SET quantity = cart.quantity + EXCLUDED.quantity
+    `,[customer_id,product_id,quantity]);
+}
+
+module.exports = {
     getTeamNBAJerseys,
     getNbaPlayerJersey,
     getAllNBAProducts,
     getAllProductsNames,
-    getAllNBATeams
+    getAllNBATeams,
+    getProduct,
+    addToCart,
 }
