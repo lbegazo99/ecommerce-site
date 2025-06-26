@@ -19,7 +19,7 @@ async function CreateNewUser(req,res){
 
         const token = jwt.sign(
             {
-                userId: customer_id
+                customer_id: customer_id
             },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
@@ -45,4 +45,15 @@ async function addToCart(req,res){
     }
 }
 
-module.exports = {CreateNewUser,addToCart}
+async function getCart(req,res){
+    const customer_id = req.user.customer_id
+    try{
+       const cart =  await db2.getCart(customer_id)
+       res.json(cart)
+    }catch(err){
+        console.error("Error in getting cart",err)
+        res.status(500).json({error:"Failed to get cart"});
+    }
+}
+
+module.exports = {CreateNewUser,addToCart,getCart}

@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const { CreateNewUser, addToCart } = require("../controllers/userController");
+const { CreateNewUser, addToCart ,getCart} = require("../controllers/userController");
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const userRouter = Router();
@@ -30,7 +30,7 @@ userRouter.post("/log-in", async (req,res) =>{
       return res.status(401).json({ error: 'Incorrect password' });
     }
     const token = jwt.sign(
-      { userId: user.customer_id },
+      { customer_id: user.customer_id },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -62,6 +62,7 @@ function verifyToken(req,res,next){
         return res.sendStatus(403);
       }
       req.user = decoded
+      console.log(req.user);
       next();
     })
   }else{
@@ -70,5 +71,7 @@ function verifyToken(req,res,next){
 }
 
 userRouter.post("/addToCart", verifyToken, addToCart)
+
+userRouter.get("/cart",verifyToken,getCart)
 
 module.exports = userRouter;

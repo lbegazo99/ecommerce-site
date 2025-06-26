@@ -5,14 +5,17 @@ import SearchBar from "./searchBar";
 import {useState,useContext} from "react";
 import { SearchResultsList } from "./SearchResultsList";
 import { AuthContext } from "./AuthProvider";
+
 function Header(){
     const[results,setResults] = useState([]);
     const{isLoggedIn,logout} = useContext(AuthContext)
+   
 
     const handleLogout = () =>{
         logout();
     }
 
+   
     return(
         <>
             <div id="header">
@@ -21,7 +24,7 @@ function Header(){
                     <div className="left-side">
                       { !isLoggedIn && <button id = "loginButton" style={{backgroundColor:"inherit"}} ><Link to = "/login">Log In</Link></button>}
                       { isLoggedIn && <button id = "logOutButton" style={{backgroundColor:"inherit"}} onClick = {handleLogout}>Log Out</button>}
-                      <button id="cart"><FaShoppingCart /></button>
+                      <Link to = '/cart'><button id="cart"><FaShoppingCart /></button></Link>
                     </div>
                 </div>
                 <div id="bottom">

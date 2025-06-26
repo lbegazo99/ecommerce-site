@@ -73,6 +73,18 @@ async function addToCart(customer_id,product_id,quantity){
     `,[customer_id,product_id,quantity]);
 }
 
+async function getCart(customer_id){
+   const result =  await pool.query(`
+        SELECT product.product_description, product.price , cart.quantity, product.thumbnail
+        FROM cart
+        JOIN product ON cart.product_id = product.product_id
+        WHERE cart.customer_id = $1
+    `,[customer_id])
+
+    console.log(result.rows);
+    return result.rows
+}
+
 module.exports = {
     getTeamNBAJerseys,
     getNbaPlayerJersey,
@@ -81,4 +93,5 @@ module.exports = {
     getAllNBATeams,
     getProduct,
     addToCart,
+    getCart
 }
