@@ -2,6 +2,31 @@ require("dotenv").config();
 const pool = require('./pool'); 
 console.log("🚀 Populating database:", process.env.DB_NAME);
 
+const insertMoreItems = `
+  INSERT INTO Product (price, product_description, thumbnail, quantity)
+  VALUES 
+    (325.00, 'Shaquille ONeal Purple Los Angeles Lakers 2000 NBA All-Star Jersey','/images/ShaqLakers2000AllStar.avif', 5),
+    (300.00, 'Shaquille ONeal Purple Los Angeles Lakers 2001/02 HardWood Classics Authentic Jersey','/images/ShaqLakersPurple2001HardWoodClassics.avif', 5),
+    (300.00, 'Magic Johnson Gold Los Angeles Lakers 1984/85 HardWood Classics Authentic Jersey', '/images/MagicJohnsonGold1984Jersey.avif', 5),
+    (300.00, 'Magic Johnson Purple Los Angeles Lakers 1984/85 Authentic Jersey','/images/MagicJohnsonPurple1984Jersey.avif', 5),
+    (135.00, 'Michael Cooper Gold Los Angeles Lakers 1984/85 Swingman Jersey','/images/MichaelCooperGold1984Jersey.avif', 5),
+    (135.00, 'Shaquille ONeal Blue Los Angeles Lakers 2001/02 HardWood Classics Swingman Jersey','/images/ShaqBlue2001Jersey.avif', 5),
+    (135.00, 'Pau Gasol Purple Los Angeles Lakers 2009/10 Swingman Jersey','/images/PauGasolPurple09Jersey.avif', 5)
+  ON CONFLICT DO NOTHING;
+
+  INSERT INTO Jersey (p_id, league, team, player, year)
+  VALUES
+    (4, 'NBA', 'Lakers', 'Shaquille ONeal', '2000'),
+    (5, 'NBA', 'Lakers', 'Shaquille ONeal', '2001'),
+    (6, 'NBA', 'Lakers', 'Magic Johnson', '1984'),
+    (7, 'NBA', 'Lakers', 'Magic Johnson', '1984'),
+    (8, 'NBA', 'Lakers', 'Michael Cooper', '1984'),
+    (9, 'NBA', 'Lakers', 'Shaquille ONeal', '2001'),
+    (10, 'NBA', 'Lakers', 'Pau Gasol', '2009')
+  ON CONFLICT DO NOTHING;
+`;
+
+
 const createShoppingCartTable = `
   CREATE TABLE IF NOT EXISTS cart(
     customer_id INTEGER NOT NULL,
@@ -57,7 +82,7 @@ const creatAndInitializeProductTable = `
     league VARCHAR(10),
     team VARCHAR(20),
     player VARCHAR(30),
-    year VARCHAR(4),
+    year VARCHAR(4),.
     FOREIGN KEY (p_id) REFERENCES Product(product_id)
   );
 
@@ -144,7 +169,7 @@ const createAndSeedTables = `
 
 async function initDb() {
   try {
-    await pool.query(createShoppingCartTable);
+    await pool.query(insertMoreItems);
     console.log("Database initialized.");
   } catch (err) {
     console.error("Database setup error:", err);

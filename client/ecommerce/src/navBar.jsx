@@ -10,25 +10,28 @@ function NavBar() {
   }
   
   const handleMouseLeave = () =>{
-    setVisibleDropdown(null)
+   const hideTimeout = setTimeout(() => {
+      setVisibleDropdown(null)
+    },2000)
+
   }
 
   return(
     <>
       <div className = "navBar">
 
-        <div className = "dropdown">
-        <button onMouseEnter={() => handleMouseEnter("nba")} onMouseLeave={handleMouseLeave} className="link">NBA</button>
+        <div onMouseEnter={() => handleMouseEnter("nba")} onMouseLeave={handleMouseLeave} className = "dropdown">
+        <button className="link">NBA</button>
         {visibleDropdown === "nba" && <DropDown league={"nba"}/>}
         </div>
 
-        <div className="dropdown">
-          <button onMouseEnter={() => handleMouseEnter("nfl")} onMouseLeave={handleMouseLeave} className="link">NFL</button>
+        <div onMouseEnter={() => handleMouseEnter("nfl")} onMouseLeave={handleMouseLeave} className="dropdown">
+          <button className="link">NFL</button>
           {visibleDropdown === "nfl" && <DropDown league={"nfl"}/>}
         </div>
 
-        <div className="dropdown">
-            <button onMouseEnter={() => handleMouseEnter("mlb")} onMouseLeave={handleMouseLeave} className="link">MLB</button>
+        <div  onMouseEnter={() => handleMouseEnter("mlb")} onMouseLeave={handleMouseLeave} className="dropdown">
+            <button className="link">MLB</button>
             {visibleDropdown === "mlb" && <DropDown league={"mlb"}/>}
           </div>
 

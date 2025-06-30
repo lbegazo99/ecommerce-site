@@ -10,6 +10,7 @@ import { RouterProvider } from 'react-router'
 import Item from './Item'
 import { Home } from './home'
 import Cart from './Cart'
+import Product from './Product'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path:"cart",
         element:<Cart/>
+      },
+      {
+        path:"product/:teamName",
+        element:<Product/>
       }
     ]
   },

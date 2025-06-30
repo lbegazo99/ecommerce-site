@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./DropDown.css"
+import { Link } from "react-router-dom";
 
 function DropDown({league}){
     const [teamNames,setTeamNames] = useState([]);
@@ -16,7 +17,7 @@ function DropDown({league}){
        <div id = "container">
           {
               teamNames.map((teamName,id) => (
-                 <div key={id}>{teamName.team}</div>
+                 <Link to = {`/product/${teamName.team}`} ><div key={id}>{teamName.team}</div></Link>
                ))
           }
        </div>

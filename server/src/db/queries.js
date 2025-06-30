@@ -1,6 +1,6 @@
 const pool = require("./pool");
 
-async function getTeamNBAJerseys(team_name) {
+async function getTeamNBAJersey(team_name) {
     const result = await pool.query(`
     SELECT *
     FROM product
@@ -86,7 +86,7 @@ async function getCart(customer_id){
 }
 
 module.exports = {
-    getTeamNBAJerseys,
+    getTeamNBAJersey,
     getNbaPlayerJersey,
     getAllNBAProducts,
     getAllProductsNames,

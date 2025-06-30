@@ -22,7 +22,7 @@ export function ImageSlider({imageUrls}){
            return index-1;
        })
     }
-    return <div style={{width: "100%", height:"100%", position:"relative"}}>
+    return <div style={{width: "100%", height:"100%", position:"relative",marginTop:"50px"}}>
         <div style={{width: "100%", height: "100%", display:"flex" ,overflow: "hidden"}}>
             {imageUrls.map(url =>(
                  <img 
