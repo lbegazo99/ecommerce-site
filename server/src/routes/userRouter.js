@@ -1,12 +1,11 @@
 const {Router} = require("express");
-const { CreateNewUser, addToCart ,getCart} = require("../controllers/userController");
+const { CreateNewUser, addToCart ,getCart,checkout} = require("../controllers/userController");
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const userRouter = Router();
 const pool = require('../db/pool');
 const bcrypt = require('bcryptjs');
-const res = require("express/lib/response");
-const req = require("express/lib/request");
+const { user } = require("pg/lib/defaults");
 
 userRouter.post("/sign-up",CreateNewUser);
 
@@ -73,5 +72,7 @@ function verifyToken(req,res,next){
 userRouter.post("/addToCart", verifyToken, addToCart)
 
 userRouter.get("/cart",verifyToken,getCart)
+
+userRouter.delete("/cart/:product_id",verifyToken,checkout);
 
 module.exports = userRouter;

@@ -75,7 +75,7 @@ async function addToCart(customer_id,product_id,quantity){
 
 async function getCart(customer_id){
    const result =  await pool.query(`
-        SELECT product.product_description, product.price , cart.quantity, product.thumbnail
+        SELECT product.product_description, product.price , cart.quantity, product.thumbnail,product.product_id
         FROM cart
         JOIN product ON cart.product_id = product.product_id
         WHERE cart.customer_id = $1
@@ -83,6 +83,19 @@ async function getCart(customer_id){
 
     console.log(result.rows);
     return result.rows
+}
+
+async function checkout(product_id,customer_id,timestamp){
+    await pool.query(`
+        INSERT INTO orderedItems(customer_id,product_id,timestamp)
+        VALUES($1,$2,$3)
+    `,[customer_id,product_id,timestamp]);
+
+    await pool.query(`
+        DELETE
+        FROM cart
+        WHERE customer_id = $1
+    `,[customer_id])
 }
 
 module.exports = {
@@ -93,5 +106,6 @@ module.exports = {
     getAllNBATeams,
     getProduct,
     addToCart,
-    getCart
+    getCart,
+    checkout
 }

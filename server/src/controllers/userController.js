@@ -1,4 +1,3 @@
-const { redirect } = require('express/lib/response');
 const db = require ('../db/insert')
 const db2 = require('../db/queries')
 const bcrypt = require('bcryptjs');
@@ -35,8 +34,6 @@ async function CreateNewUser(req,res){
 async function addToCart(req,res){
     const customer_id = req.user.customer_id;
     const{product_id,quantity} = req.body;
-    console.log(product_id)
-    console.log(quantity)
     try {
         await db2.addToCart(customer_id,product_id,quantity)
     } catch (err) {
@@ -56,4 +53,16 @@ async function getCart(req,res){
     }
 }
 
-module.exports = {CreateNewUser,addToCart,getCart}
+async function checkout(req,res){
+    const {product_id} = req.params;
+    const customer_id = req.user.customer_id
+    const {timestamp} = req.body;
+    try{
+        await db2.checkout(product_id,customer_id,timestamp);
+    }catch(err){
+        console.error("Error while checking out",err)
+        res.status(500).json({error:"Failed to checkout"});
+    }
+}
+
+module.exports = {CreateNewUser,addToCart,getCart,checkout}

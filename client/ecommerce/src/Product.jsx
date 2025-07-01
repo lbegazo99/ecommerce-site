@@ -20,8 +20,11 @@ function Product(){
                     <div className = "productContainerDiv"key={item.product_id}>
                        <Link to = {`/item/${item.product_id}`}>
                         <img className = "productImage" src={item.thumbnail} alt="photo of player jersey" />
-                            {item.product_description}
-                            {item.price}
+                            <div className="productInfo">
+                                <div>{item.product_description}</div>
+                                <div> {item.price}</div>
+                            </div>
+                            
                        </Link> 
                     </div>
                 ))

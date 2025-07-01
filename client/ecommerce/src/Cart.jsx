@@ -1,5 +1,6 @@
+
 import {useEffect,useState } from "react";
-import { data } from "react-router-dom";
+
 import "./Cart.css"
 function Cart(){
     const[cart,setCart] = useState([]);
@@ -26,7 +27,34 @@ function Cart(){
      return cart.reduce((sum,item) => sum + item.price * item.quantity,0).toFixed(2);
     }
 
-
+    const handleCheckout = async () => {
+      const token = localStorage.getItem("token");
+      const now = new Date();
+      const timestamp = now.toISOString();
+      for(const item of cart){
+          try{
+            const res = await fetch(`http://localhost:3000/user/cart/${item.product_id}`,{
+              method:"DELETE",
+              headers:{
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                timestamp: timestamp,
+              })
+            });
+    
+            if(!res.ok){
+              throw new Error("Failed to delete item");
+            }
+    
+            alert("Item deleted!");
+          }catch(err){
+            console.error("Delete error:",err);
+          }
+        }
+    }
+  
 
     return(
         <div>
@@ -56,7 +84,7 @@ function Cart(){
             <div style={{marginLeft:"10px",fontSize:"20px"}}>Cart Total: ${getCartTotal()}</div>
           </div>
           <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100px"} }>
-            <button className="checkoutButton">Checkout</button>
+            <button onClick={handleCheckout} className="checkoutButton">Checkout</button>
           </div>
           
         </div>

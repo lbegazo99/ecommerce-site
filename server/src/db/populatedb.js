@@ -2,6 +2,18 @@ require("dotenv").config();
 const pool = require('./pool'); 
 console.log("🚀 Populating database:", process.env.DB_NAME);
 
+const createOrderedTable = `
+  CREATE TABLE IF NOT EXISTS orderedItems(
+    id SERIAL PRIMARY KEY,
+    customer_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+  );
+`;
+
 const insertMoreItems = `
   INSERT INTO Product (price, product_description, thumbnail, quantity)
   VALUES 
@@ -169,7 +181,7 @@ const createAndSeedTables = `
 
 async function initDb() {
   try {
-    await pool.query(insertMoreItems);
+    await pool.query(createOrderedTable);
     console.log("Database initialized.");
   } catch (err) {
     console.error("Database setup error:", err);
